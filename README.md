@@ -13,7 +13,7 @@ This application helps to quickly download the Application Policies into JSON fi
 
 From sources
 
-Download the sources from [Github](https://github.com/leeahnduk/Json2Apps.git), extract and execute the following commands
+Download the sources from [Github](https://github.com/leeahnduk/Apps2ASA.git), extract and execute the following commands
 
 ```
 $ pip3 install -r requirements.txt
