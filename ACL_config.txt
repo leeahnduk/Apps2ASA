@@ -1,0 +1,62 @@
+object network Frontend-Proxy
+  host 172.17.16.236
+object network Backend-Proxy
+  host 172.17.16.233
+object network Siwapp-Apps
+  host 172.17.16.238
+  host 172.17.16.237
+  host 172.17.16.235
+object network Siwapp-SQL
+  host 172.17.16.232
+  host 172.17.16.239
+  host 172.17.16.240
+object network anhdle:AUS:Shared_Services:Domain_Services
+  host 172.16.1.90
+  host 172.16.1.91
+object network anhdle:AUS:Shared_Services:IPAM
+  host 172.16.1.98
+object network anhdle:AUS:Shared_Services:Tetration
+  host 172.17.0.12
+  host 172.17.0.15
+  host 172.17.0.8
+  host 172.17.0.13
+  host 172.17.0.6
+  host 172.17.0.5
+  host 172.17.0.14
+  host 172.17.0.19
+  host 172.17.0.18
+  host 172.17.0.21
+  host 172.17.0.22
+  host 172.17.0.16
+  host 172.17.0.9
+  host 172.17.0.7
+  host 172.17.0.20
+  host 172.17.0.17
+  host 172.17.0.10
+  host 172.17.0.11
+object network anhdle:AUS:Users
+  host 172.16.1.37
+  host 172.17.16.234
+  host 172.16.90.25
+  host 172.16.90.26
+  host 172.16.1.38
+! 
+access-list ACL_IN extended permit UDP object Frontend-Proxy object anhdle:AUS:Shared_Services:Domain_Services eq ntp
+access-list ACL_IN extended permit TCP object anhdle:AUS:Users object Frontend-Proxy eq www
+access-list ACL_IN extended permit UDP object Frontend-Proxy object anhdle:AUS:Shared_Services:IPAM eq domain
+access-list ACL_IN extended permit TCP object Siwapp-Apps object anhdle:AUS:Shared_Services:Tetration eq 5660
+access-list ACL_IN extended permit UDP object Backend-Proxy object anhdle:AUS:Shared_Services:IPAM eq domain
+access-list ACL_IN extended permit TCP object Frontend-Proxy object Siwapp-Apps eq 8081
+access-list ACL_IN extended permit TCP object Backend-Proxy object anhdle:AUS:Shared_Services:Tetration eq 5660
+access-list ACL_IN extended permit UDP object Siwapp-SQL object anhdle:AUS:Shared_Services:Domain_Services eq ntp
+access-list ACL_IN extended permit TCP object Backend-Proxy object Siwapp-SQL eq 3306
+access-list ACL_IN extended permit UDP object Siwapp-Apps object anhdle:AUS:Shared_Services:IPAM eq domain
+access-list ACL_IN extended permit UDP object Siwapp-SQL object anhdle:AUS:Shared_Services:IPAM eq domain
+access-list ACL_IN extended permit TCP object Siwapp-Apps object Backend-Proxy eq 3306
+access-list ACL_IN extended permit UDP object Backend-Proxy object anhdle:AUS:Shared_Services:Domain_Services eq ntp
+access-list ACL_IN extended permit TCP object Siwapp-SQL object anhdle:AUS:Shared_Services:Tetration eq 5660
+access-list ACL_IN extended permit TCP object Frontend-Proxy object anhdle:AUS:Shared_Services:Tetration eq 5660
+access-list ACL_IN extended permit UDP object Siwapp-Apps object anhdle:AUS:Shared_Services:Domain_Services eq ntp
+access-list ACL_IN extended deny ip any any
+!
+
